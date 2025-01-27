@@ -1,5 +1,11 @@
 # Ros2 setup:
 
+if [ "$(lsb_release -rs)" != "24.04" ]; then
+    echo "This script is for Ubuntu 24.04 (noble) and ros2 jazzy only"
+    exit 1
+fi
+
+
 locale  # check for UTF-8
 sudo apt update && sudo apt install locales
 sudo locale-gen en_US en_US.UTF-8
