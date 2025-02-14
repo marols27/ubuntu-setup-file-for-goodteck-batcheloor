@@ -1,7 +1,5 @@
 # Ros2 setup:
-# admin permition for the script: remember <<EOF [CONTENT] EOF enclosing arround the whole script!!!
-sudo bash <<EOF
-
+set -x
 locale  # check for UTF-8
 apt update && apt install locales
 locale-gen en_US en_US.UTF-8
@@ -54,5 +52,3 @@ cd ..
 colcon build --symlink-install
 source ~/ros2_ws/install/setup.bash
 
-
-EOF
