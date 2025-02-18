@@ -1,7 +1,8 @@
 #!/bin/bash
-# Ros2 setup:
 set -x
 
+
+# Ros2 setup:
 locale  # check for UTF-8
 apt update && apt install locales
 locale-gen en_US en_US.UTF-8
