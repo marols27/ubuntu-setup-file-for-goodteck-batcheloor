@@ -1,5 +1,7 @@
+#!/bin/bash
 # Ros2 setup:
 set -x
+
 locale  # check for UTF-8
 apt update && apt install locales
 locale-gen en_US en_US.UTF-8
@@ -8,7 +10,7 @@ export LANG=en_US.UTF-8
 locale  # verify settings
 apt install software-properties-common -y
 add-apt-repository universe -y
-apt update && apt install curl -y
+apt update && apt install curl gnupg2 lsb-release -y
 curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null
 apt update && apt install ros-dev-tools -y
@@ -38,8 +40,9 @@ cd ~/ros2_ws/src
 git clone https://github.com/ros/ros_tutorials.git -b jazzy
 # cd if you're still in the ``src`` directory with the ``ros_tutorials`` clone
 cd ..
+rosdep init
+rosdep update
 rosdep install -i --from-path src --rosdistro jazzy -y
-colcon build
 source /opt/ros/jazzy/setup.bash
 
 
@@ -47,6 +50,7 @@ source /opt/ros/jazzy/setup.bash
 # Universal Robots package download:
 cd ~/ros2_ws/src
 git clone -b ros2 https://github.com/UniversalRobots/Universal_Robots_ROS2_GZ_Simulation.git ~/ros2_ws/src/ur_simulation_gz
+rosdep update
 rosdep install --from-paths src --ignore-src -r -y
 cd ..
 colcon build --symlink-install
